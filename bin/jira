@@ -1,0 +1,35 @@
+#!/usr/bin/env ruby
+
+require 'jira_cmd'
+require 'yaml'
+
+opts = JiraOptions.new
+opts.parse_options
+
+puts opts.config.inspect
+
+config_file = "#{ENV['HOME']}/.jira_cmd"
+
+if File.exists? 
+  YAML.load_file 
+  server = config_filel['server']
+  current_user = config_filel['current_user']
+end
+
+server = opts.config[:server] if opts.config[:server]
+current_user = opts.config[:current_user] if opts.config[:current_user]
+
+jira_cmd = JiraCmd.new server, current_user
+
+opts.config.each do |k,v|
+  case k
+  when /mine/
+    jira_cmd.get_mine
+  when /user/
+    jira_cmd.get_user(v)
+  when /release/
+    jira_cmd.get_in_release(v)
+  when /issue/
+    jira_cmd.get_issue(v)
+  end
+end
