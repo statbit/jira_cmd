@@ -6,20 +6,18 @@ require 'yaml'
 opts = JiraOptions.new
 opts.parse_options
 
-puts opts.config.inspect
-
 config_file = "#{ENV['HOME']}/.jira_cmd"
 
-if File.exists? 
-  YAML.load_file 
-  server = config_filel['server']
-  current_user = config_filel['current_user']
+if File.exists? config_file
+  config_data = YAML.load_file config_file
+  server = config_data['server']
+  current_user = config_data['current_user']
 end
 
 server = opts.config[:server] if opts.config[:server]
 current_user = opts.config[:current_user] if opts.config[:current_user]
 
-jira_cmd = JiraCmd.new server, current_user
+jira_cmd = JiraCmd.new(server, current_user)
 
 opts.config.each do |k,v|
   case k

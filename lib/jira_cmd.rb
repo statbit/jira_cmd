@@ -54,9 +54,9 @@ class JiraCmd
 
   attr_accessor :server, :user
 
-  def intialize(_server, _user)
-    @server = _server
-    @user = _user
+  def initialize(server_name, user_name)
+    @server = server_name
+    @user = user_name
   end
 
   def get_mine
